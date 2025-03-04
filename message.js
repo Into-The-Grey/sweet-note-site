@@ -1,13 +1,14 @@
 let messages = [];
 
-// Fetch messages from GitHub storage
+// Fetch messages from your JSON file (assumed to be hosted on GitHub or your server)
 fetch("message.json")
-    .then(response => response.json())
-    .then(data => {
+    .then((response) => response.json())
+    .then((data) => {
         messages = data.messages || [];
-        document.getElementById("note-content").innerText = messages.length ? messages[messages.length - 1] : "No messages yet.";
+        document.getElementById("note-content").innerText =
+            messages.length ? messages[messages.length - 1] : "No messages yet.";
     })
-    .catch(error => console.error("Error loading messages:", error));
+    .catch((error) => console.error("Error loading messages:", error));
 
 function toggleEdit() {
     const editor = document.getElementById("note-editor");
@@ -30,23 +31,36 @@ function toggleEdit() {
 }
 
 function saveNote() {
-    const newMessage = document.getElementById("note-editor").value.trim(); // Trim removes spaces
+    const newMessage = document.getElementById("note-editor").value.trim();
 
     if (newMessage === "") {
         alert("Message cannot be empty!");
         return;
     }
 
+    // Update the in-memory messages array and display the new message
     messages.push(newMessage);
     document.getElementById("note-content").innerText = newMessage;
     toggleEdit();
 
-    // Append the new message instead of overwriting
-    fetch("message.json", {
+    // Send the new message to the server. 
+    // The server-side endpoint "save_message.php" should append the new message 
+    // to your JSON file (without overwriting the existing content) and to "message_history.txt".
+    fetch("save_message.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: messages })
-    }).catch(error => console.error("Error saving message:", error));
+        body: JSON.stringify({ message: newMessage }),
+    })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return response.text();
+        })
+        .then((data) => {
+            console.log("Message saved successfully:", data);
+        })
+        .catch((error) => console.error("Error saving message:", error));
 }
 
 // Show the edit button for all users
