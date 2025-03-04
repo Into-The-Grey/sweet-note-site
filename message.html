@@ -2,14 +2,94 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sweet Note</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+        /* Overrides for messages.html to create a more professional look */
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: #f7f7f7;
+            /* neutral background */
+            color: #333;
+        }
+
+        .page-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #444;
+        }
+
+        #note-content {
+            padding: 20px;
+            font-size: 1.2rem;
+            background: #fefefe;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 10px auto;
+            max-width: 600px;
+            min-height: 100px;
+            display: inline-block;
+            text-align: left;
+        }
+
+        #note-editor {
+            width: 80%;
+            max-width: 600px;
+            padding: 15px;
+            font-size: 1.1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 10px auto;
+            display: block;
+        }
+
+        /* Styled buttons for Edit and Save */
+        #edit-button,
+        #save-button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+            margin: 10px;
+        }
+
+        #edit-button:hover,
+        #save-button:hover {
+            background: #0056b3;
+            transform: scale(1.05);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+
+            #note-content,
+            #note-editor {
+                width: 90%;
+            }
+        }
+    </style>
     <script defer src="message.js"></script>
 </head>
 
 <body>
+    <!-- Floating hearts container so the hearts animation appears on this page -->
+    <div class="floating-hearts"></div>
+
     <div class="page-container">
         <h1>💌 A Special Note</h1>
         <p id="note-content">Loading...</p>
